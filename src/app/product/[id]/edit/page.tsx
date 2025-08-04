@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -31,8 +32,7 @@ type EditProductPageParams = {
   };
 };
 
-export default function EditProductPage({ params }: EditProductPageParams) {
-  const id = params.id;
+export default function EditProductPage({ params: { id } }: EditProductPageParams) {
   const [product, setProduct] = useState<Product | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();

@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -21,10 +22,9 @@ type ProductPageParams = {
   };
 };
 
-export default function ProductPage({ params }: ProductPageParams) {
+export default function ProductPage({ params: { id } }: ProductPageParams) {
   const router = useRouter();
   const { user } = useUser();
-  const id = params.id;
   const product = getProductById(id);
   const { addToCart } = useCart();
   const { toast } = useToast();
