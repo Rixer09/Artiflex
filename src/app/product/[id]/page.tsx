@@ -41,8 +41,8 @@ export default function ProductPage({ params }: ProductPageParams) {
     });
   };
 
-  // This is a mock creator check. In a real app, this would be based on product ownership.
-  const isCreator = user?.role === 'creator' && id === '1';
+  // In a real app, you would check against the logged-in user's ID
+  const isCreator = user?.role === 'creator' && product.creatorId === 'creator-1';
 
   return (
     <div className="container mx-auto py-12">
