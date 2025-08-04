@@ -131,7 +131,7 @@ export default function CreatePage() {
             title: 'Product Published!',
             description: 'Your product is now live in the marketplace.',
         });
-        router.push(`/product/${result.product.id}`);
+        router.push('/');
     } else {
         toast({
             title: 'Error',
