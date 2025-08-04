@@ -32,7 +32,7 @@ type EditProductPageParams = {
 };
 
 export default function EditProductPage({ params }: EditProductPageParams) {
-  const { id } = params;
+  const id = params.id;
   const [product, setProduct] = useState<Product | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();

@@ -24,7 +24,7 @@ type ProductPageParams = {
 export default function ProductPage({ params }: ProductPageParams) {
   const router = useRouter();
   const { user } = useUser();
-  const { id } = params;
+  const id = params.id;
   const product = getProductById(id);
   const { addToCart } = useCart();
   const { toast } = useToast();
