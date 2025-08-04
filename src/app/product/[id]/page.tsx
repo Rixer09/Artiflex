@@ -14,16 +14,16 @@ const mockProduct = {
   productName: 'Orion Nebula T-Shirt',
   price: 35.0,
   images: [
-    'https://placehold.co/800x800',
-    'https://placehold.co/800x800',
-    'https://placehold.co/800x800',
-    'https://placehold.co/800x800',
+    'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
+    'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-2.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
+    'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-3.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
+    'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-4.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
   ],
   description: "Crafted from the stardust of imagination, the Orion Nebula T-Shirt is more than just apparel; it's a wearable piece of the cosmos. Each shirt features a hyper-realistic print of the Orion Nebula, captured in breathtaking detail. The 100% organic cotton provides a soft, breathable fit, perfect for earthly adventures or cosmic voyages. With special glow-in-the-dark ink, the nebula comes alive at night, a secret wonder for you and those you let close. It's designed for the dreamers, the stargazers, and the pioneers of inner space.",
   creator: {
     name: 'Alex Stellar',
     bio: 'Astronomer by day, artist by night. Alex translates the wonders of the universe into tangible art, believing that everyone should have a piece of the cosmos to call their own.',
-    avatarUrl: 'https://placehold.co/100x100',
+    avatarUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/alex-stellar.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
   },
   originStory: "The idea for Cosmic Weavers was born during a late-night stargazing session. Overwhelmed by the beauty of the Orion Nebula through a telescope, I felt a deep urge to share that sense of awe. I wanted to create something that could carry that feeling into everyday life. After months of experimenting with printing techniques and sustainable fabrics, the Orion Nebula T-Shirt was born—the first in a series of wearable wonders.",
   emotionalTags: ['Awe-Inspiring', 'Creative', 'Unique', 'Handcrafted Feel'],
@@ -31,19 +31,19 @@ const mockProduct = {
     {
       title: 'The Spark',
       text: 'A sketch in a notebook under a starry sky.',
-      imageUrl: 'https://placehold.co/600x400',
+      imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/visual-story-1.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
       dataAiHint: 'sketchbook night',
     },
     {
       title: 'The Craft',
       text: 'Mixing eco-friendly, glow-in-the-dark inks.',
-      imageUrl: 'https://placehold.co/600x400',
+      imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/visual-story-2.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
       dataAiHint: 'mixing paint',
     },
     {
       title: 'The Final Piece',
       text: 'The first shirt, glowing with cosmic energy.',
-      imageUrl: 'https://placehold.co/600x400',
+      imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/visual-story-3.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
       dataAiHint: 'glowing t-shirt',
     },
   ],
@@ -113,7 +113,7 @@ export default function ProductPage({ params }: ProductPageParams) {
             <div className="flex items-center space-x-2">
                 <Button variant="outline" size="icon"><Heart/></Button>
                 <Button variant="outline" size="icon"><Share2/></Button>
-                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">Add to Cart</Button>
+                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">Add to Cart</Button>
             </div>
           </div>
           
@@ -159,7 +159,7 @@ export default function ProductPage({ params }: ProductPageParams) {
                 {product.visualStory.map((item, index) => (
                     <Card key={index} className="overflow-hidden group">
                         <Image src={item.imageUrl} alt={item.title} width={600} height={400} className="w-full object-cover aspect-video transition-transform duration-300 group-hover:scale-105" data-ai-hint={item.dataAiHint}/>
-                        <CardContent className="p-4">
+                        <CardContent className="p-6 pt-4">
                             <h3 className="font-headline text-lg">{item.title}</h3>
                             <p className="font-body text-sm text-muted-foreground">{item.text}</p>
                         </CardContent>

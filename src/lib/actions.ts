@@ -22,13 +22,9 @@ export async function createDescription(
   }
 }
 
-export async function publishProduct(product: Omit<Product, 'id' | 'dataAiHint'>): Promise<{ success: boolean, error?: string }> {
+export async function publishProduct(product: Omit<Product, 'id'>): Promise<{ success: boolean, error?: string }> {
   try {
-    addProduct({
-      ...product,
-      id: Date.now().toString(),
-      dataAiHint: product.brandName.toLowerCase().split(' ').slice(0,2).join(' '),
-    });
+    addProduct(product);
     revalidatePath('/');
     return { success: true };
   } catch(e) {

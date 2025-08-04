@@ -145,7 +145,7 @@ export default function CreatePage() {
     switch (step) {
       case 1:
         return (
-          <CardContent>
+          <CardContent className="pt-6">
             <RadioGroup onValueChange={(val) => handleNext({ productType: val })} defaultValue={formData.productType}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {productTypes.map((product) => (
@@ -165,7 +165,7 @@ export default function CreatePage() {
         );
       case 2:
         return (
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 pt-6">
             <div>
               <Label htmlFor="brandName">Brand Name</Label>
               <Input id="brandName" defaultValue={formData.brandName} onChange={e => setFormData({...formData, brandName: e.target.value})} placeholder="e.g., Cosmic Weavers" />
@@ -178,7 +178,7 @@ export default function CreatePage() {
         );
       case 3:
         return (
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 pt-6">
             <div>
                 <Label>Product Image</Label>
                 <div 
@@ -216,7 +216,7 @@ export default function CreatePage() {
       case 4:
         return (
           <form onSubmit={handleSubmit(onGenerate)}>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="productName">Product Name</Label>
@@ -261,7 +261,7 @@ export default function CreatePage() {
         );
       case 5:
         return (
-           <CardContent className="space-y-4">
+           <CardContent className="space-y-4 pt-6">
             {isGenerating ? (
               <div className="flex flex-col items-center justify-center text-center p-8 space-y-4">
                 <Loader2 className="h-12 w-12 animate-spin text-primary" />

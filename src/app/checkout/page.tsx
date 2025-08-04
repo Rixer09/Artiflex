@@ -128,13 +128,13 @@ export default function CheckoutPage() {
                         {step === 1 ? 'Please enter your shipping details.' : step === 2 ? 'Enter your payment information.' : 'Your order is complete!'}
                     </CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="pt-6">
                         {renderStepContent()}
                     </CardContent>
                     {step < 3 && (
                         <CardFooter className="flex justify-between">
                             <Button variant="outline" onClick={handleBack} disabled={step === 1}>Back</Button>
-                            <Button onClick={handleNext} className="bg-accent text-accent-foreground hover:bg-accent/90">
+                            <Button onClick={handleNext} className="bg-primary text-primary-foreground hover:bg-primary/90">
                                 {step === 1 ? 'Proceed to Payment' : 'Place Order'}
                                 <Send className="ml-2 h-4 w-4" />
                             </Button>
@@ -153,9 +153,9 @@ export default function CheckoutPage() {
                         <ShoppingBag className="mr-2" /> Order Summary
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 pt-6">
                     <div className="flex items-center space-x-4">
-                        <Image src="https://placehold.co/100x100" alt="Orion Nebula T-Shirt" width={100} height={100} className="rounded-md border" data-ai-hint="galaxy t-shirt" />
+                        <Image src="https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734" alt="Orion Nebula T-Shirt" width={100} height={100} className="rounded-md border" data-ai-hint="galaxy t-shirt" />
                         <div>
                             <p className="font-semibold">Orion Nebula T-Shirt</p>
                             <p className="text-sm text-muted-foreground">Qty: 1</p>
