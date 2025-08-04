@@ -25,6 +25,7 @@ export type Product = {
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-5.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-6.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-7.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
+        'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-8.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
       ],
     },
     {
