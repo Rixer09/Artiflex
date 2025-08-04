@@ -24,7 +24,8 @@ type ProductPageParams = {
 export default function ProductPage({ params }: ProductPageParams) {
   const router = useRouter();
   const { user } = useUser();
-  const product = getProductById(params.id);
+  const { id } = params;
+  const product = getProductById(id);
   const { addToCart } = useCart();
   const { toast } = useToast();
 
@@ -41,7 +42,7 @@ export default function ProductPage({ params }: ProductPageParams) {
   };
 
   // This is a mock creator check. In a real app, this would be based on product ownership.
-  const isCreator = user?.role === 'creator' && params.id === '1';
+  const isCreator = user?.role === 'creator' && id === '1';
 
   return (
     <div className="container mx-auto py-12">

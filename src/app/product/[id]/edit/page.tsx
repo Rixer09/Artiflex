@@ -32,6 +32,7 @@ type EditProductPageParams = {
 };
 
 export default function EditProductPage({ params }: EditProductPageParams) {
+  const { id } = params;
   const [product, setProduct] = useState<Product | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
@@ -42,7 +43,7 @@ export default function EditProductPage({ params }: EditProductPageParams) {
   });
 
   useEffect(() => {
-    const existingProduct = getProductById(params.id);
+    const existingProduct = getProductById(id);
     if (existingProduct) {
       setProduct(existingProduct);
       setValue('brandName', existingProduct.brandName);
@@ -52,7 +53,7 @@ export default function EditProductPage({ params }: EditProductPageParams) {
     } else {
       notFound();
     }
-  }, [params.id, setValue]);
+  }, [id, setValue]);
 
   const price = watch('price', product?.price || 0);
 
