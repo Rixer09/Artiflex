@@ -12,7 +12,7 @@ export type Product = {
   
   let products: Product[] = [
     {
-      id: '1',
+      id: 'cosmic-weavers',
       brandName: 'Cosmic Weavers',
       tagline: 'Threads of the universe, woven for you.',
       price: 35.0,
@@ -31,7 +31,7 @@ export type Product = {
       ],
     },
     {
-      id: '2',
+      id: 'geomugs',
       brandName: 'GeoMugs',
       tagline: 'Start your day with abstract beauty.',
       price: 18.5,
@@ -45,7 +45,7 @@ export type Product = {
       ]
     },
     {
-      id: '3',
+      id: 'urban-canvas',
       brandName: 'Urban Canvas',
       tagline: 'Wear the street. Be the art.',
       price: 42.0,
@@ -59,7 +59,7 @@ export type Product = {
       ]
     },
     {
-      id: '4',
+      id: 'flora-fauna',
       brandName: 'Flora & Fauna',
       tagline: 'Nature\'s elegance, redefined.',
       price: 29.99,
@@ -73,7 +73,7 @@ export type Product = {
       ]
     },
     {
-      id: '5',
+      id: 'retro-future',
       brandName: 'Retro Future',
       tagline: 'The future as imagined yesterday.',
       price: 55.0,
@@ -87,7 +87,7 @@ export type Product = {
       ]
     },
     {
-      id: '6',
+      id: 'minimalist-line',
       brandName: 'Minimalist Line',
       tagline: 'Simplicity is the ultimate sophistication.',
       price: 25.0,
@@ -109,9 +109,18 @@ export type Product = {
   };
 
   export const addProduct = (product: Omit<Product, 'id' | 'creatorId'>) => {
+    const slug = product.brandName.toLowerCase().replace(/\s+/g, '-');
+    let newId = slug;
+    let counter = 1;
+    // Ensure the ID is unique
+    while (getProductById(newId)) {
+      newId = `${slug}-${counter}`;
+      counter++;
+    }
+
     const newProduct: Product = {
         ...product,
-        id: crypto.randomUUID(),
+        id: newId,
         creatorId: 'creator-1', // Associate with the current creator
         dataAiHint: product.brandName.toLowerCase().split(' ').slice(0,2).join(' '),
     };
