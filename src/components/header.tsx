@@ -17,7 +17,7 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 backdrop-blur-lg">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 @supports (backdrop-filter:blur(12px))]:bg-background/60 @supports (backdrop-filter:blur(12px))]:backdrop-blur-lg">
       <div className="container flex h-14 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
@@ -48,7 +48,7 @@ export default function Header() {
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="pr-0 bg-background/80 backdrop-blur-lg">
+              <SheetContent side="left" className="pr-0 bg-background/80 @supports (backdrop-filter:blur(12px))]:backdrop-blur-lg">
                 <Link href="/" className="mr-6 flex items-center space-x-2">
                     <Zap className="h-6 w-6 text-primary" />
                     <span className="font-bold font-headline text-lg">Artiflex</span>
