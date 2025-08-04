@@ -38,6 +38,7 @@ export type Product = {
       storySnippet: 'Geometric patterns that channel the earth\'s raw energy...',
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/geomugs.png?alt=media&token=98e9e627-9c98-4c4c-9f89-8d7d3153578c',
       dataAiHint: 'geometric mug',
+      creatorId: 'creator-1',
       images: [
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/geomugs-2.png?alt=media&token=c6c4c520-2e4a-4a2e-b6c8-2b8b901a5e18',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/geomugs-3.png?alt=media&token=3b3b4f3b-6e0e-4b4b-9e4e-0c1c6c5c1c8c',
@@ -51,6 +52,7 @@ export type Product = {
       storySnippet: 'A tribute to the vibrant graffiti and street art of the city...',
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/urban-canvas.png?alt=media&token=c1e1a5f4-3e9a-4122-83e9-f3b1b59a85c9',
       dataAiHint: 'graffiti hoodie',
+      creatorId: 'creator-1',
        images: [
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/urban-canvas-2.png?alt=media&token=b4b2c1c0-2e5e-4b4b-8e1e-0c1c6c5c1c8c',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/urban-canvas-3.png?alt=media&token=a5a1b0b9-3e8e-4a3a-9e3e-0c1c6c5c1c8c',
@@ -64,6 +66,7 @@ export type Product = {
       storySnippet: 'Delicate illustrations of botanical wonders on sustainable fabric...',
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/flora-fauna.png?alt=media&token=8e9b6e3c-2a62-4325-9b83-3c9704052309',
       dataAiHint: 'botanical print',
+      creatorId: 'creator-1',
        images: [
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/flora-fauna-2.png?alt=media&token=d0d1e2e3-4f4f-4b4b-8e1e-0c1c6c5c1c8c',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/flora-fauna-3.png?alt=media&token=e1e2f3f4-5g5g-4c4c-9f9f-0c1c6c5c1c8c',
@@ -77,6 +80,7 @@ export type Product = {
       storySnippet: 'Synthwave aesthetics and nostalgic visions of a neon-drenched tomorrow...',
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/retro-future.png?alt=media&token=3b8f6c1e-8e0a-4a2e-9c7a-2e6b21c43452',
       dataAiHint: 'retro computer',
+      creatorId: 'creator-1',
       images: [
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/retro-future-2.png?alt=media&token=f0f1g2g3-6h6h-4d4d-8g8g-0c1c6c5c1c8c',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/retro-future-3.png?alt=media&token=0g1h2i3j-7k7k-4e4e-9h9h-0c1c6c5c1c8c',
@@ -90,6 +94,7 @@ export type Product = {
       storySnippet: 'One line, one story. A collection that speaks volumes with less...',
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/minimalist-line.png?alt=media&token=42d1f0d3-3c2b-4a7e-8c6e-8e5f5f4b3a21',
       dataAiHint: 'minimalist art',
+      creatorId: 'creator-1',
       images: [
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/minimalist-line-2.png?alt=media&token=j0k1l2m3-8n8n-4f4f-8j8j-0c1c6c5c1c8c',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/minimalist-line-3.png?alt=media&token=k1l2m3n4-9o9o-4g4g-9k9k-0c1c6c5c1c8c',
@@ -106,7 +111,7 @@ export type Product = {
   export const addProduct = (product: Omit<Product, 'id' | 'creatorId'>) => {
     const newProduct: Product = {
         ...product,
-        id: (products.length + 1).toString(),
+        id: crypto.randomUUID(),
         creatorId: 'creator-1', // Associate with the current creator
         dataAiHint: product.brandName.toLowerCase().split(' ').slice(0,2).join(' '),
     };
