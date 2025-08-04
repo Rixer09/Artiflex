@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -10,11 +10,13 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Loader2, Sparkles, CheckCircle, Wand2 } from 'lucide-react';
+import { Loader2, Sparkles, CheckCircle, Wand2, Upload, DollarSign } from 'lucide-react';
 import { createDescription, publishProduct } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { Slider } from '@/components/ui/slider';
+import Image from 'next/image';
 
 const productTypes = [
   { id: 't-shirt', label: 'T-Shirt', description: 'Classic cotton tee' },
@@ -37,16 +39,19 @@ type FormValues = z.infer<typeof formSchema>;
 const steps = [
   { id: 1, name: 'Choose Product' },
   { id: 2, name: 'Brand Identity' },
-  { id: 3, name: 'Generate Description' },
-  { id: 4, name: 'Publish' },
+  { id: 3, name: 'Product Details' },
+  { id: 4, name: 'Generate Description' },
+  { id: 5, name: 'Publish' },
 ];
 
 export default function CreatePage() {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<any>({ price: 50 });
   const [generatedDescription, setGeneratedDescription] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const router = useRouter();
 
@@ -56,7 +61,7 @@ export default function CreatePage() {
 
   const handleNext = (data?: any) => {
     setFormData((prev: any) => ({ ...prev, ...data }));
-    if (step < 4) {
+    if (step < steps.length) {
       setStep(step + 1);
     }
   };
@@ -64,6 +69,19 @@ export default function CreatePage() {
   const handleBack = () => {
     if (step > 1) {
       setStep(step - 1);
+    }
+  };
+  
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const dataUri = reader.result as string;
+        setImagePreview(dataUri);
+        setFormData({ ...formData, imageUrl: dataUri });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -91,7 +109,7 @@ export default function CreatePage() {
         description: result.error || 'Could not generate description.',
         variant: 'destructive',
       });
-      setStep(3); // Go back to the form if generation fails
+      setStep(4); // Go back to the form if generation fails
     }
   };
   
@@ -100,8 +118,9 @@ export default function CreatePage() {
     const productData = {
       brandName: formData.brandName,
       tagline: formData.tagline,
-      price: 39.99, // Example price, you could add this to the form
+      price: formData.price,
       storySnippet: generatedDescription.substring(0, 100) + '...',
+      imageUrl: formData.imageUrl,
     };
     
     const result = await publishProduct(productData);
@@ -159,6 +178,43 @@ export default function CreatePage() {
         );
       case 3:
         return (
+          <CardContent className="space-y-6">
+            <div>
+                <Label>Product Image</Label>
+                <div 
+                    className="mt-2 flex justify-center items-center w-full h-64 border-2 border-dashed rounded-md cursor-pointer hover:border-primary transition-colors"
+                    onClick={() => fileInputRef.current?.click()}
+                >
+                    <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/png, image/jpeg, image/gif" className="hidden" />
+                    {imagePreview ? (
+                        <Image src={imagePreview} alt="Product preview" width={256} height={256} className="object-contain h-full w-full"/>
+                    ) : (
+                        <div className="text-center text-muted-foreground">
+                            <Upload className="mx-auto h-12 w-12" />
+                            <p>Click to upload an image</p>
+                            <p className="text-xs">PNG, JPG, GIF up to 10MB</p>
+                        </div>
+                    )}
+                </div>
+            </div>
+            <div>
+                <Label>Product Price</Label>
+                <div className="flex items-center gap-4 mt-2">
+                    <DollarSign className="h-6 w-6 text-muted-foreground" />
+                    <Slider
+                        defaultValue={[formData.price]}
+                        min={3}
+                        max={500}
+                        step={1}
+                        onValueChange={(value) => setFormData({...formData, price: value[0]})}
+                    />
+                    <span className="font-bold text-lg w-24 text-right">${formData.price.toFixed(2)}</span>
+                </div>
+            </div>
+          </CardContent>
+        );
+      case 4:
+        return (
           <form onSubmit={handleSubmit(onGenerate)}>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -203,7 +259,7 @@ export default function CreatePage() {
             </CardFooter>
           </form>
         );
-      case 4:
+      case 5:
         return (
            <CardContent className="space-y-4">
             {isGenerating ? (
@@ -257,7 +313,8 @@ export default function CreatePage() {
                             {
                                 step === 1 ? "Start by selecting a base product to customize." :
                                 step === 2 ? "Define what makes your brand unique." :
-                                step === 3 ? "Provide details for our AI to craft a compelling story." :
+                                step === 3 ? "Upload an image and set your price." :
+                                step === 4 ? "Provide details for our AI to craft a compelling story." :
                                 "Review your AI-generated description and publish!"
                             }
                         </CardDescription>
@@ -265,12 +322,12 @@ export default function CreatePage() {
                     
                     {renderStep()}
 
-                    {step !== 3 && (
+                    {step !== 4 && (
                         <CardFooter className="flex justify-between">
                             <Button variant="outline" onClick={handleBack} disabled={step === 1}>Back</Button>
-                            {step < 4 ?
+                            {step < steps.length ?
                                 <Button onClick={() => handleNext()}>Next</Button> :
-                                <Button onClick={handlePublish} disabled={isPublishing} className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                <Button onClick={handlePublish} disabled={isPublishing || !formData.imageUrl} className="bg-primary text-primary-foreground hover:bg-primary/90">
                                     {isPublishing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> :<Sparkles className="mr-2 h-4 w-4" />} 
                                     Publish to Marketplace
                                 </Button>

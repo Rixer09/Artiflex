@@ -22,12 +22,11 @@ export async function createDescription(
   }
 }
 
-export async function publishProduct(product: Omit<Product, 'id' | 'imageUrl' | 'dataAiHint'>): Promise<{ success: boolean, error?: string }> {
+export async function publishProduct(product: Omit<Product, 'id' | 'dataAiHint'>): Promise<{ success: boolean, error?: string }> {
   try {
     addProduct({
       ...product,
       id: Date.now().toString(),
-      imageUrl: 'https://placehold.co/600x600',
       dataAiHint: product.brandName.toLowerCase().split(' ').slice(0,2).join(' '),
     });
     revalidatePath('/');
