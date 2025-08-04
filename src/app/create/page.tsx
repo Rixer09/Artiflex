@@ -11,9 +11,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Loader2, Sparkles, CheckCircle, Wand2 } from 'lucide-react';
-import { createDescription } from '@/lib/actions';
+import { createDescription, publishProduct } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 const productTypes = [
   { id: 't-shirt', label: 'T-Shirt', description: 'Classic cotton tee' },
@@ -45,7 +46,9 @@ export default function CreatePage() {
   const [formData, setFormData] = useState<any>({});
   const [generatedDescription, setGeneratedDescription] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isPublishing, setIsPublishing] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -89,6 +92,33 @@ export default function CreatePage() {
         variant: 'destructive',
       });
       setStep(3); // Go back to the form if generation fails
+    }
+  };
+  
+  const handlePublish = async () => {
+    setIsPublishing(true);
+    const productData = {
+      brandName: formData.brandName,
+      tagline: formData.tagline,
+      price: 39.99, // Example price, you could add this to the form
+      storySnippet: generatedDescription.substring(0, 100) + '...',
+    };
+    
+    const result = await publishProduct(productData);
+    setIsPublishing(false);
+
+    if(result.success) {
+        toast({
+            title: 'Product Published!',
+            description: 'Your product is now live in the marketplace.',
+        });
+        router.push('/');
+    } else {
+        toast({
+            title: 'Error',
+            description: result.error || 'Could not publish product.',
+            variant: 'destructive',
+        });
     }
   };
 
@@ -166,7 +196,7 @@ export default function CreatePage() {
             </CardContent>
             <CardFooter className="flex justify-between">
               <Button type="button" variant="outline" onClick={handleBack}>Back</Button>
-              <Button type="submit" className="bg-accent text-accent-foreground hover:bg-accent/90" disabled={isGenerating}>
+              <Button type="submit" className="bg-primary text-primary-foreground hover:bg-primary/90" disabled={isGenerating}>
                 {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
                 Generate with AI
               </Button>
@@ -240,8 +270,9 @@ export default function CreatePage() {
                             <Button variant="outline" onClick={handleBack} disabled={step === 1}>Back</Button>
                             {step < 4 ?
                                 <Button onClick={() => handleNext()}>Next</Button> :
-                                <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
-                                    <Sparkles className="mr-2 h-4 w-4" /> Publish to Marketplace
+                                <Button onClick={handlePublish} disabled={isPublishing} className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                    {isPublishing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> :<Sparkles className="mr-2 h-4 w-4" />} 
+                                    Publish to Marketplace
                                 </Button>
                             }
                         </CardFooter>
