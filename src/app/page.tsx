@@ -37,17 +37,19 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="text-center mt-16">
-          <h2 className="text-3xl font-headline mb-4">Have an Idea?</h2>
-          <p className="max-w-xl mx-auto text-foreground/80 mb-6">
-              Bring your vision to life. Use our AI-powered tools to create and sell your own unique products.
-          </p>
-          <Link href="/create">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                  Start Your Creative Journey
-              </Button>
-          </Link>
-      </section>
+      {user.role === 'creator' && (
+        <section className="text-center mt-16">
+            <h2 className="text-3xl font-headline mb-4">Have an Idea?</h2>
+            <p className="max-w-xl mx-auto text-foreground/80 mb-6">
+                Bring your vision to life. Use our AI-powered tools to create and sell your own unique products.
+            </p>
+            <Link href="/create">
+                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                    Start Your Creative Journey
+                </Button>
+            </Link>
+        </section>
+      )}
     </div>
   );
 }

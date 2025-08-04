@@ -7,17 +7,25 @@ import { Menu, Zap } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/hooks/use-cart';
+import { useUser } from '@/hooks/use-user';
 
-const navLinks = [
+const baseNavLinks = [
   { href: '/', label: 'Marketplace' },
-  { href: '/create', label: 'Create' },
   { href: '/my-cart', label: 'My Cart' },
 ];
+
+const creatorNavLinks = [
+    { href: '/create', label: 'Create' },
+]
 
 export default function Header() {
   const pathname = usePathname();
   const { cart } = useCart();
+  const { user } = useUser();
   const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  const navLinks = user.role === 'creator' ? [...baseNavLinks.slice(0,1), ...creatorNavLinks, ...baseNavLinks.slice(1)] : baseNavLinks;
+  const mobileNavLinks = user.role === 'creator' ? [...baseNavLinks, ...creatorNavLinks] : baseNavLinks;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 @supports (backdrop-filter:blur(12px))]:bg-background/60 @supports (backdrop-filter:blur(12px))]:backdrop-blur-lg">
@@ -62,7 +70,7 @@ export default function Header() {
                     <span className="font-bold font-headline text-lg">Artiflex</span>
                 </Link>
                 <div className="flex flex-col space-y-4 mt-6">
-                    {navLinks.map((link) => (
+                    {mobileNavLinks.map((link) => (
                     <Link
                         key={link.href}
                         href={link.href}
@@ -72,18 +80,25 @@ export default function Header() {
                         )}
                     >
                         {link.label}
+                         {link.href === '/my-cart' && cartItemCount > 0 && (
+                            <span className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
+                                {cartItemCount}
+                            </span>
+                        )}
                     </Link>
                     ))}
                 </div>
               </SheetContent>
             </Sheet>
           </div>
-          <Link href="/create" className='hidden sm:inline-block'>
-            <Button>
-              Start Creating
-              <Zap className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          {user.role === 'creator' && (
+            <Link href="/create" className='hidden sm:inline-block'>
+              <Button>
+                Start Creating
+                <Zap className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </header>
