@@ -126,12 +126,12 @@ export default function CreatePage() {
     const result = await publishProduct(productData);
     setIsPublishing(false);
 
-    if(result.success) {
+    if(result.success && result.product) {
         toast({
             title: 'Product Published!',
             description: 'Your product is now live in the marketplace.',
         });
-        router.push('/');
+        router.push(`/product/${result.product.id}`);
     } else {
         toast({
             title: 'Error',

@@ -6,15 +6,18 @@ import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import { Menu, Zap } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { useCart } from '@/hooks/use-cart';
 
 const navLinks = [
   { href: '/', label: 'Marketplace' },
   { href: '/create', label: 'Create' },
-  { href: '/checkout', label: 'Checkout' },
+  { href: '/my-cart', label: 'My Cart' },
 ];
 
 export default function Header() {
   const pathname = usePathname();
+  const { cart } = useCart();
+  const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 @supports (backdrop-filter:blur(12px))]:bg-background/60 @supports (backdrop-filter:blur(12px))]:backdrop-blur-lg">
@@ -30,11 +33,16 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  'transition-colors hover:text-foreground/80',
+                  'transition-colors hover:text-foreground/80 relative',
                   pathname === link.href ? 'text-foreground' : 'text-foreground/60'
                 )}
               >
                 {link.label}
+                {link.href === '/my-cart' && cartItemCount > 0 && (
+                  <span className="absolute -top-2 -right-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
+                    {cartItemCount}
+                  </span>
+                )}
               </Link>
             ))}
           </nav>

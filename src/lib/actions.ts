@@ -22,11 +22,11 @@ export async function createDescription(
   }
 }
 
-export async function publishProduct(product: Omit<Product, 'id'>): Promise<{ success: boolean, error?: string }> {
+export async function publishProduct(product: Omit<Product, 'id'>): Promise<{ success: boolean; product?: Product; error?: string }> {
   try {
-    addProduct(product);
+    const newProduct = addProduct(product);
     revalidatePath('/');
-    return { success: true };
+    return { success: true, product: newProduct };
   } catch(e) {
     console.error(e);
     return { success: false, error: "Failed to publish product." };

@@ -1,10 +1,24 @@
+'use client';
+
 import ProductCard from '@/components/product-card';
 import { Button } from '@/components/ui/button';
 import { getProducts } from '@/lib/products';
 import Link from 'next/link';
+import { useUser } from '@/hooks/use-user';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const products = getProducts();
+  const { user } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user.role) {
+      router.push('/login');
+    }
+  }, [user, router]);
+
   return (
     <div className="container py-8 md:py-12">
       <section className="text-center mb-12">
@@ -13,7 +27,7 @@ export default function Home() {
         </h1>
         <p className="max-w-2xl mx-auto text-lg text-foreground/80 font-body">
           Discover unique creations from a new generation of artists. Each piece
-          tells a story, powered by imagination and AI.
+          tells a story, powered by imagination and AI. Welcome, {user.role || 'guest'}!
         </p>
       </section>
 

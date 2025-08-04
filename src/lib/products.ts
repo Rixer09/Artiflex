@@ -6,6 +6,7 @@ export type Product = {
     storySnippet: string;
     imageUrl: string;
     dataAiHint?: string;
+    images?: string[];
   };
   
   let products: Product[] = [
@@ -17,6 +18,11 @@ export type Product = {
       storySnippet: 'Inspired by distant galaxies, each shirt is a map of the cosmos...',
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
       dataAiHint: 'galaxy t-shirt',
+      images: [
+        'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-2.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
+        'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-3.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
+        'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-4.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
+      ],
     },
     {
       id: '2',
@@ -66,12 +72,24 @@ export type Product = {
   ];
 
   export const getProducts = () => products;
+  
+  export const getProductById = (id: string): Product | undefined => {
+    return products.find(p => p.id === id);
+  };
 
   export const addProduct = (product: Omit<Product, 'id'>) => {
-    products.unshift({
+    const newProduct = {
         ...product,
         id: (products.length + 1).toString(),
         dataAiHint: product.brandName.toLowerCase().split(' ').slice(0,2).join(' '),
-    });
+    };
+    products.unshift(newProduct);
+    return newProduct;
   }
   
+  export const updateProduct = (id: string, updatedProduct: Product) => {
+    const productIndex = products.findIndex(p => p.id === id);
+    if (productIndex > -1) {
+      products[productIndex] = updatedProduct;
+    }
+  };
