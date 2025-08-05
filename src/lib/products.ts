@@ -14,6 +14,12 @@ export type Product = {
   // To add more images to a product, find the product object by its 'id' or 'brandName'.
   // Inside that product object, you will see an 'images' array.
   // Simply add the new image URL as a string to this 'images' array.
+
+  // HOW TO USE LOCAL IMAGES:
+  // 1. Place your image files in the `public/images` directory.
+  // 2. In this file, reference them with a path starting with `/images/`.
+  //    For example, if you have `public/images/my-mug.png`, you would use the path '/images/my-mug.png'.
+
   let products: Product[] = [
     {
       id: 'cosmic-weavers',
@@ -45,13 +51,14 @@ export type Product = {
       tagline: 'Start your day with abstract beauty.',
       price: 18.5,
       storySnippet: 'Geometric patterns that channel the earth\'s raw energy...',
-      imageUrl: 'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/geomugs.png?alt=media&token=98e9e627-9c98-4c4c-9f89-8d7d3153578c',
+      imageUrl: '/images/geomug-main.png', // <-- EXAMPLE: Using a local image
       dataAiHint: 'geometric mug',
       creatorId: 'creator-1',
-      // To add more images for GeoMugs, add the URL inside this array.
+      // EXAMPLE: Add more local images for GeoMugs inside this array.
+      // Just make sure the image files exist in `public/images/`
       images: [
-        'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/geomugs-2.png?alt=media&token=c6c4c520-2e4a-4a2e-b6c8-2b8b901a5e18',
-        'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/geomugs-3.png?alt=media&token=3b3b4f3b-6e0e-4b4b-9e4e-0c1c6c5c1c8c',
+         '/images/geomug-2.png',
+         '/images/geomug-3.png',
       ]
     },
     {
@@ -82,7 +89,6 @@ export type Product = {
        images: [
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/flora-fauna-2.png?alt=media&token=d0d1e2e3-4f4f-4b4b-8e1e-0c1c6c5c1c8c',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/flora-fauna-3.png?alt=media&token=e1e2f3f4-5g5g-4c4c-9f9f-0c1c6c5c1c8c',
-        'https://cdn.pixabay.com/photo/2025/07/14/13/00/basilisk-9713946_1280.jpg'
       ]
     },
     {

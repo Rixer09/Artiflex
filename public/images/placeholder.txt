@@ -1,0 +1,1 @@
+This folder is for your local images. Move your image files here and reference them in your code with a path starting from the root, like '/images/your-image-name.png'.
