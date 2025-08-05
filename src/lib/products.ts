@@ -21,8 +21,39 @@ export type Product = {
   //    For example, if you have `public/images/my-mug.png`, you would use the path '/images/my-mug.png'.
 
   let products: Product[] = [
-    // All default products have been removed.
-    // You can start creating new products through the app.
+    {
+      id: 'cosmic-weavers-t-shirt',
+      brandName: 'Cosmic Weavers',
+      tagline: 'Threads of the universe, woven for you.',
+      price: 29.99,
+      storySnippet: 'A unique t-shirt inspired by the vastness of space and the intricate patterns of the cosmos. Made with 100% organic cotton for ultimate comfort and durability.',
+      imageUrl: '/images/Cosmic weavers-1.webp',
+      images: ['/images/Cosmic weavers-2.webp', '/images/Cosmic weavers-3.webp'],
+      dataAiHint: 'cosmic weavers',
+      creatorId: 'creator-1',
+    },
+    {
+      id: 'galaxy-hoodie',
+      brandName: 'Galaxy Gear',
+      tagline: 'Wear the stars.',
+      price: 59.99,
+      storySnippet: 'Stay warm and stylish with this premium hoodie featuring a stunning galaxy print. Perfect for stargazers and sci-fi enthusiasts.',
+      imageUrl: '/images/colorado-tshirt-1.webp', // Using provided image for now
+      images: ['/images/colorado-tshirt-2.webp'], // Using provided image for now
+      dataAiHint: 'galaxy gear',
+      creatorId: 'creator-1',
+    },
+    {
+      id: 'nebula-mug',
+      brandName: 'Stellar Sips',
+      tagline: 'Your daily dose of cosmic inspiration.',
+      price: 14.99,
+      storySnippet: 'Enjoy your favorite beverage in this ceramic mug adorned with a vibrant nebula design. A perfect gift for astronomy lovers.',
+      imageUrl: '/images/colorado-tshirt-1.webp', // Using provided image for now
+      images: ['/images/colorado-tshirt-2.webp'], // Using provided image for now
+      dataAiHint: 'stellar sips',
+      creatorId: 'creator-1',
+    },
   ];
 
   const NEWLY_LAUNCHED_KEY = 'newlyLaunchedProductIds';

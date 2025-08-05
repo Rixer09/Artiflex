@@ -1,41 +1,29 @@
 
-'use client';
-
 import Image from 'next/image';
-import { notFound, useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Star, Edit, ShoppingCart } from 'lucide-react';
-import { getProductById } from '@/lib/products';
-import { useCart } from '@/hooks/use-cart';
-import { useToast } from '@/hooks/use-toast';
-import { useUser } from '@/hooks/use-user';
-import Link from 'next/link';
+import { Star } from 'lucide-react';
+import { getProductById, getProducts, Product } from '@/lib/products';
+import ProductActions from './product-actions'; // New client component for actions
 
-export default function ProductPage() {
-  const params = useParams();
-  const id = params.id as string;
-  const { user } = useUser();
+export async function generateStaticParams() {
+  const products = getProducts();
+  return products.map((product) => ({
+    id: product.id,
+  }));
+}
+
+export default function ProductPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const product = getProductById(id);
-  const { addToCart } = useCart();
-  const { toast } = useToast();
 
   if (!product) {
     notFound();
   }
-  
-  const handleAddToCart = () => {
-    addToCart(product);
-    toast({
-      title: "Added to Cart!",
-      description: `${product.brandName} has been added to your cart.`,
-    });
-  };
-
-  const isCreator = user?.role === 'creator';
 
   return (
     <div className="container mx-auto py-12">
@@ -86,19 +74,7 @@ export default function ProductPage() {
           
           <div className="flex items-center justify-between mb-8">
             <p className="text-4xl font-bold font-headline">${product.price.toFixed(2)}</p>
-            <div className="flex items-center space-x-2">
-                {isCreator ? (
-                  <Link href={`/product/${product.id}/edit`}>
-                    <Button size="lg">
-                      <Edit className="mr-2 h-4 w-4" /> Edit Product
-                    </Button>
-                  </Link>
-                ) : (
-                  <Button size="lg" onClick={handleAddToCart}>
-                    <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
-                  </Button>
-                )}
-            </div>
+            <ProductActions product={product} /> {/* Use the new client component */}
           </div>
           
           <Separator className="my-8" />
