@@ -24,8 +24,10 @@ export async function createDescription(
 
 export async function publishProduct(product: Omit<Product, 'id'>): Promise<{ success: boolean; product?: Product; error?: string }> {
   try {
+    // This server action now returns the newly created product.
     const newProduct = addProduct(product);
-    revalidatePath('/');
+    // Revalidation is still good practice for other scenarios.
+    revalidatePath('/'); 
     return { success: true, product: newProduct };
   } catch(e) {
     console.error(e);

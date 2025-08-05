@@ -17,6 +17,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Slider } from '@/components/ui/slider';
 import Image from 'next/image';
+import { addNewlyLaunchedProductId } from '@/lib/products';
 
 const productTypes = [
   { id: 't-shirt', label: 'T-Shirt', description: 'Classic cotton tee' },
@@ -127,6 +128,8 @@ export default function CreatePage() {
     setIsPublishing(false);
 
     if(result.success && result.product) {
+        // Instead of relying on server state, we save the new product ID to localStorage
+        addNewlyLaunchedProductId(result.product.id);
         toast({
             title: 'Product Published!',
             description: 'Your product is now live in the marketplace.',
@@ -341,5 +344,3 @@ export default function CreatePage() {
     </div>
   );
 }
-
-    
