@@ -1,9 +1,8 @@
 
-
 'use client';
 
 import Image from 'next/image';
-import { notFound, useRouter, useParams } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -15,10 +14,8 @@ import { useCart } from '@/hooks/use-cart';
 import { useToast } from '@/hooks/use-toast';
 import { useUser } from '@/hooks/use-user';
 import Link from 'next/link';
-import { use } from 'react';
 
 export default function ProductPage() {
-  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
   const { user } = useUser();
@@ -38,7 +35,6 @@ export default function ProductPage() {
     });
   };
 
-  // The edit button should appear for any product if the user is a creator.
   const isCreator = user?.role === 'creator';
 
   return (
@@ -57,7 +53,7 @@ export default function ProductPage() {
                       width={800}
                       height={800}
                       className="aspect-square object-cover"
-                      data-ai-hint="galaxy t-shirt"
+                      data-ai-hint="product image"
                     />
                   </Card>
                 </CarouselItem>
@@ -70,9 +66,6 @@ export default function ProductPage() {
               </>
             }
           </Carousel>
-           <div className="text-center mt-2 text-sm text-muted-foreground">
-            360° View Coming Soon
-           </div>
         </div>
 
         {/* Right Column: Product Details */}
