@@ -1,29 +1,25 @@
 
+
 'use client';
 
 import Image from 'next/image';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound, useRouter, useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Star, MessageCircle, Share2, Heart, Edit, ShoppingCart } from 'lucide-react';
+import { Star, Edit, ShoppingCart } from 'lucide-react';
 import { getProductById } from '@/lib/products';
 import { useCart } from '@/hooks/use-cart';
 import { useToast } from '@/hooks/use-toast';
 import { useUser } from '@/hooks/use-user';
 import Link from 'next/link';
 
-type ProductPageParams = {
-  params: {
-    id: string;
-  };
-};
-
-export default function ProductPage({ params: { id } }: ProductPageParams) {
+export default function ProductPage() {
   const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
   const { user } = useUser();
   const product = getProductById(id);
   const { addToCart } = useCart();
@@ -51,7 +47,7 @@ export default function ProductPage({ params: { id } }: ProductPageParams) {
         <div className="sticky top-24">
           <Carousel className="w-full">
             <CarouselContent>
-              {[product.imageUrl, ...product.images || []].map((src, index) => (
+              {[product.imageUrl, ...(product.images || [])].map((src, index) => (
                 <CarouselItem key={index}>
                   <Card className="overflow-hidden">
                     <Image
@@ -66,8 +62,12 @@ export default function ProductPage({ params: { id } }: ProductPageParams) {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="ml-16" />
-            <CarouselNext className="mr-16" />
+            { (product.images?.length || 0) > 0 &&
+              <>
+                <CarouselPrevious className="ml-16" />
+                <CarouselNext className="mr-16" />
+              </>
+            }
           </Carousel>
            <div className="text-center mt-2 text-sm text-muted-foreground">
             360° View Coming Soon
@@ -93,8 +93,6 @@ export default function ProductPage({ params: { id } }: ProductPageParams) {
           <div className="flex items-center justify-between mb-8">
             <p className="text-4xl font-bold font-headline">${product.price.toFixed(2)}</p>
             <div className="flex items-center space-x-2">
-                <Button variant="outline" size="icon"><Heart/></Button>
-                <Button variant="outline" size="icon"><Share2/></Button>
                 {isCreator ? (
                   <Link href={`/product/${product.id}/edit`}>
                     <Button size="lg">

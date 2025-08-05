@@ -113,10 +113,24 @@ export type Product = {
     },
   ];
 
+  // This is a temporary, in-memory store for newly launched products.
+  // In a real application, this would be handled by a proper database and caching mechanism.
+  let newlyLaunchedProducts: Product[] = [];
+
   export const getProducts = () => products;
+
+  export const getNewlyLaunchedProducts = () => newlyLaunchedProducts;
   
+  export const clearNewlyLaunchedProducts = () => {
+    // Once displayed, we can merge them into the main list and clear the temporary one.
+    if(newlyLaunchedProducts.length > 0) {
+        products.unshift(...newlyLaunchedProducts);
+        newlyLaunchedProducts = [];
+    }
+  }
+
   export const getProductById = (id: string): Product | undefined => {
-    return products.find(p => p.id === id);
+    return products.find(p => p.id === id) || newlyLaunchedProducts.find(p => p.id === id);
   };
 
   export const addProduct = (product: Omit<Product, 'id' | 'creatorId'>) => {
@@ -135,7 +149,8 @@ export type Product = {
         creatorId: 'creator-1', // Associate with the current creator
         dataAiHint: product.brandName.toLowerCase().split(' ').slice(0,2).join(' '),
     };
-    products.unshift(newProduct);
+    // Add to the "Newly Launched" list to be displayed immediately
+    newlyLaunchedProducts.unshift(newProduct);
     return newProduct;
   }
   
@@ -143,5 +158,9 @@ export type Product = {
     const productIndex = products.findIndex(p => p.id === id);
     if (productIndex > -1) {
       products[productIndex] = updatedProduct;
+    }
+     const newProductIndex = newlyLaunchedProducts.findIndex(p => p.id === id);
+    if (newProductIndex > -1) {
+        newlyLaunchedProducts[newProductIndex] = updatedProduct;
     }
   };

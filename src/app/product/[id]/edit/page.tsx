@@ -1,7 +1,8 @@
 
+
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -12,7 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Loader2, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter, notFound } from 'next/navigation';
+import { useRouter, notFound, useParams } from 'next/navigation';
 import { getProductById, updateProduct, type Product } from '@/lib/products';
 import { Slider } from '@/components/ui/slider';
 import Image from 'next/image';
@@ -26,13 +27,9 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-type EditProductPageParams = {
-  params: {
-    id: string;
-  };
-};
-
-export default function EditProductPage({ params: { id } }: EditProductPageParams) {
+export default function EditProductPage() {
+  const params = useParams();
+  const id = params.id as string;
   const [product, setProduct] = useState<Product | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
