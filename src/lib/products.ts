@@ -34,6 +34,9 @@ export type Product = {
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-6.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-7.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/cosmic-weavers-8.png?alt=media&token=16a342a3-5c73-41c6-991c-7a72ce243734',
+        'https://placehold.co/800x800.png',
+        'https://placehold.co/800x800.png',
+        'https://placehold.co/800x800.png',
       ],
     },
     {
@@ -79,6 +82,7 @@ export type Product = {
        images: [
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/flora-fauna-2.png?alt=media&token=d0d1e2e3-4f4f-4b4b-8e1e-0c1c6c5c1c8c',
         'https://firebasestorage.googleapis.com/v0/b/artiflex-37b58.appspot.com/o/flora-fauna-3.png?alt=media&token=e1e2f3f4-5g5g-4c4c-9f9f-0c1c6c5c1c8c',
+        'https://cdn.pixabay.com/photo/2025/07/14/13/00/basilisk-9713946_1280.jpg'
       ]
     },
     {
@@ -140,7 +144,7 @@ export type Product = {
     return products.find(p => p.id === id);
   };
 
-  export const addProduct = (product: Omit<Product, 'id' | 'creatorId'>) => {
+  export const addProduct = (product: Omit<Product, 'id'>) => {
     const slug = product.brandName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     let newId = slug;
     let counter = 1;
