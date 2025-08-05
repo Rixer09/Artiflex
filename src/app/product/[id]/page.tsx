@@ -15,6 +15,7 @@ import { useCart } from '@/hooks/use-cart';
 import { useToast } from '@/hooks/use-toast';
 import { useUser } from '@/hooks/use-user';
 import Link from 'next/link';
+import { use } from 'react';
 
 export default function ProductPage() {
   const router = useRouter();
@@ -37,8 +38,8 @@ export default function ProductPage() {
     });
   };
 
-  // In a real app, you would check against the logged-in user's ID
-  const isCreator = user?.role === 'creator' && product.creatorId === 'creator-1';
+  // The edit button should appear for any product if the user is a creator.
+  const isCreator = user?.role === 'creator';
 
   return (
     <div className="container mx-auto py-12">
