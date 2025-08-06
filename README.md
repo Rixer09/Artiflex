@@ -7,7 +7,7 @@ To get started, take a look at src/app/page.tsx
 <!-- Project.. -->
 <!-- Customer and Creator -->
 Old default features are removed and new Creating Fesh is introduced , new created things could be seen only
-Trying to Publish part 5
+
 rixer09-github-io-nqbr.vercel.app => Deployment link
 
 
