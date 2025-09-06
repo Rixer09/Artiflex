@@ -27,8 +27,8 @@ export type Product = {
       tagline: 'Threads of the universe, woven for you.',
       price: 29.99,
       storySnippet: 'A unique t-shirt inspired by the vastness of space and the intricate patterns of the cosmos. Made with 100% organic cotton for ultimate comfort and durability.',
-      imageUrl: '/images/Cosmic weavers-1.webp',
-      images: ['/images/Cosmic weavers-2.webp', '/images/Cosmic weavers-3.webp'],
+      imageUrl: '/images/T-shirt1.webp',
+      images: ['/images/T-shirt2.webp', '/images/cfimages.avif', '/images/cfimages (1).avif', '/images/cfimages (2).avif', '/images/cfimages (3).avif'],
       dataAiHint: 'cosmic weavers',
       creatorId: 'creator-1',
     },
@@ -38,8 +38,8 @@ export type Product = {
       tagline: 'Wear the stars.',
       price: 59.99,
       storySnippet: 'Stay warm and stylish with this premium hoodie featuring a stunning galaxy print. Perfect for stargazers and sci-fi enthusiasts.',
-      imageUrl: '/images/colorado-tshirt-1.webp', // Using provided image for now
-      images: ['/images/colorado-tshirt-2.webp'], // Using provided image for now
+      imageUrl: '/images/T-shirt2.webp',
+      images: [ '/images/cfimages.avif', '/images/cfimages (1).avif', '/images/cfimages (2).avif', '/images/cfimages (3).avif'],
       dataAiHint: 'galaxy gear',
       creatorId: 'creator-1',
     },
@@ -49,8 +49,8 @@ export type Product = {
       tagline: 'Your daily dose of cosmic inspiration.',
       price: 14.99,
       storySnippet: 'Enjoy your favorite beverage in this ceramic mug adorned with a vibrant nebula design. A perfect gift for astronomy lovers.',
-      imageUrl: '/images/colorado-tshirt-1.webp', // Using provided image for now
-      images: ['/images/colorado-tshirt-2.webp'], // Using provided image for now
+      imageUrl: '/images/sage-greene.webp',
+      images: ['/images/cfimages.avif', '/images/cfimages (1).avif', '/images/cfimages (2).avif', '/images/cfimages (3).avif'],
       dataAiHint: 'stellar sips',
       creatorId: 'creator-1',
     },
